@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import moment from 'moment'
 import Input from './Input'
+import { connect } from 'react-redux'
+import { setEmail } from './reducer'
 import './App.css'
 
 const targetDate = moment('2018-05-06 17:00:00')
@@ -53,8 +55,8 @@ class App extends Component {
             title="Email"
             placeholder="Email Input..."
             icon="fa-envelope"
-            value={email}
-            onChange={email => this.setState({ email })}
+            value={this.props.email}
+            onChange={email => this.props.setEmail(email)}
             required
           />
           <Input
@@ -135,4 +137,12 @@ class App extends Component {
   }
 }
 
-export default App
+const mapStateToProps = state => ({
+  email: state.email
+})
+
+const mapDispatchToProps = dispatch => ({
+  setEmail: value => dispatch(setEmail(value))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(App)
