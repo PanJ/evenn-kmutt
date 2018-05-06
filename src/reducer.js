@@ -9,17 +9,18 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case 'SET_EMAIL':
+    case 'SET_FIELD':
       return {
         ...state,
-        email: action.value
+        [action.key]: action.value
       }
     default:
       return state
   }
 }
 
-export const setEmail = value => ({
-  type: 'SET_EMAIL',
+export const setField = (key, value) => ({
+  type: 'SET_FIELD',
+  key,
   value
 })

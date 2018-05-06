@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import moment from 'moment'
 import Input from './Input'
 import { connect } from 'react-redux'
-import { setEmail } from './reducer'
+import { setField } from './reducer'
 import './App.css'
 
 const targetDate = moment('2018-05-06 17:00:00')
@@ -10,14 +10,6 @@ const targetDate = moment('2018-05-06 17:00:00')
 class App extends Component {
   constructor(props) {
     super(props)
-    this.state = {
-      email: '',
-      ticketType: '',
-      agreeTerms: false,
-      addFood: false,
-      countdown: '',
-      username: ''
-    }
   }
   componentDidMount() {
     this.interval = setInterval(this.updateCountdown, 1000)
@@ -31,9 +23,10 @@ class App extends Component {
     const hour = Math.floor(duration.asHours())
     const minute = duration.minutes()
     const second = duration.seconds()
-    this.setState({
-      countdown: `${hour} hours ${minute} minutes ${second} seconds`
-    })
+    this.props.setField(
+      'countdown',
+      `${hour} hours ${minute} minutes ${second} seconds`
+    )
   }
   render() {
     const {
@@ -42,8 +35,9 @@ class App extends Component {
       agreeTerms,
       addFood,
       countdown,
-      username
-    } = this.state
+      username,
+      setField
+    } = this.props
     return (
       <div className="section">
         <div className="container">
@@ -55,8 +49,8 @@ class App extends Component {
             title="Email"
             placeholder="Email Input..."
             icon="fa-envelope"
-            value={this.props.email}
-            onChange={email => this.props.setEmail(email)}
+            value={email}
+            onChange={email => setField('email', email)}
             required
           />
           <Input
@@ -65,7 +59,7 @@ class App extends Component {
             placeholder="e.g. John"
             icon="fa-user"
             value={username}
-            onChange={username => this.setState({ username })}
+            onChange={username => setField('username', username)}
           />
 
           <div className="field">
@@ -74,7 +68,7 @@ class App extends Component {
               <div className="select">
                 <select
                   value={ticketType}
-                  onChange={e => this.setState({ ticketType: e.target.value })}
+                  onChange={e => setField('ticketType', e.target.value)}
                 >
                   <option>Select dropdown</option>
                   <option value="regular">Regular 100 THB</option>
@@ -90,9 +84,7 @@ class App extends Component {
                 <input
                   type="checkbox"
                   checked={agreeTerms}
-                  onChange={e =>
-                    this.setState({ agreeTerms: e.target.checked })
-                  }
+                  onChange={e => setField('agreeTerms', e.target.checked)}
                 />{' '}
                 I agree to the <a href="#">terms and conditions</a>
               </label>
@@ -107,7 +99,7 @@ class App extends Component {
                   type="radio"
                   name="question"
                   checked={addFood}
-                  onChange={() => this.setState({ addFood: true })}
+                  onChange={() => setField('addFood', true)}
                 />{' '}
                 Yes (+ 50 THB)
               </label>
@@ -116,7 +108,7 @@ class App extends Component {
                   type="radio"
                   name="question"
                   checked={!addFood}
-                  onChange={() => this.setState({ addFood: false })}
+                  onChange={() => setField('addFood', false)}
                 />{' '}
                 No
               </label>
@@ -137,12 +129,28 @@ class App extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  email: state.email
+const mapStateToProps = ({
+  email,
+  ticketType,
+  agreeTerms,
+  addFood,
+  countdown,
+  username
+}) => ({
+  email,
+  ticketType,
+  agreeTerms,
+  addFood,
+  countdown,
+  username
 })
 
-const mapDispatchToProps = dispatch => ({
-  setEmail: value => dispatch(setEmail(value))
-})
+// const mapDispatchToProps = dispatch => ({
+//   setField: value => dispatch(setField(value))
+// })
+
+const mapDispatchToProps = {
+  setField
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)
