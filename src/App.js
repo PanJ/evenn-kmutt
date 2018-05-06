@@ -41,7 +41,18 @@ class App extends Component {
           <h1 className="title">Evenn Registration Form</h1>
           <p>Ticket sale ends in</p>
           <p>{countdown}</p>
-          <Input />
+          <Input
+            type="email"
+            title="Email"
+            placeholder="Email Input..."
+            icon="fa-envelope"
+          />
+          <Input
+            type="text"
+            title="Username"
+            placeholder="e.g. John"
+            icon="fa-user"
+          />
           <div className="field">
             <label className="label">Email</label>
             <div className="control has-icons-left has-icons-right">
