@@ -12,6 +12,8 @@ export default props => (
         className={`input ${props.error ? 'is-danger' : ''}`}
         type={props.type}
         placeholder={props.placeholder}
+        onChange={e => props.onChange(e.target.value)}
+        value={props.value}
       />
       <span className="icon is-small is-left">
         <i className={`fas ${props.icon}`} />
@@ -22,6 +24,10 @@ export default props => (
         </span>
       )}
     </div>
+    {props.required &&
+      props.value.length === 0 && (
+        <p className="help is-danger">{props.title} is required</p>
+      )}
     {props.error && <p className="help is-danger">{props.error}</p>}
   </div>
 )

@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import moment from 'moment'
-import logo from './logo.svg'
 import Input from './Input'
 import './App.css'
 
@@ -14,7 +13,8 @@ class App extends Component {
       ticketType: '',
       agreeTerms: false,
       addFood: false,
-      countdown: ''
+      countdown: '',
+      username: ''
     }
   }
   componentDidMount() {
@@ -34,7 +34,14 @@ class App extends Component {
     })
   }
   render() {
-    const { email, ticketType, agreeTerms, addFood, countdown } = this.state
+    const {
+      email,
+      ticketType,
+      agreeTerms,
+      addFood,
+      countdown,
+      username
+    } = this.state
     return (
       <div className="section">
         <div className="container">
@@ -46,32 +53,18 @@ class App extends Component {
             title="Email"
             placeholder="Email Input..."
             icon="fa-envelope"
+            value={email}
+            onChange={email => this.setState({ email })}
+            required
           />
           <Input
             type="text"
             title="Username"
             placeholder="e.g. John"
             icon="fa-user"
+            value={username}
+            onChange={username => this.setState({ username })}
           />
-          <div className="field">
-            <label className="label">Email</label>
-            <div className="control has-icons-left has-icons-right">
-              <input
-                className="input is-danger"
-                type="email"
-                placeholder="Email input"
-                value={email}
-                onChange={e => this.setState({ email: e.target.value })}
-              />
-              <span className="icon is-small is-left">
-                <i className="fas fa-envelope" />
-              </span>
-              <span className="icon is-small is-right">
-                <i className="fas fa-exclamation-triangle" />
-              </span>
-            </div>
-            <p className="help is-danger">This email is invalid</p>
-          </div>
 
           <div className="field">
             <label className="label">Ticket type</label>
@@ -112,7 +105,7 @@ class App extends Component {
                   type="radio"
                   name="question"
                   checked={addFood}
-                  onClick={() => this.setState({ addFood: true })}
+                  onChange={() => this.setState({ addFood: true })}
                 />{' '}
                 Yes (+ 50 THB)
               </label>
@@ -121,7 +114,7 @@ class App extends Component {
                   type="radio"
                   name="question"
                   checked={!addFood}
-                  onClick={() => this.setState({ addFood: false })}
+                  onChange={() => this.setState({ addFood: false })}
                 />{' '}
                 No
               </label>
