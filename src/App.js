@@ -27,6 +27,7 @@ class App extends Component {
                 type="email"
                 placeholder="Email input"
                 value={email}
+                onChange={e => this.setState({ email: e.target.value })}
               />
               <span className="icon is-small is-left">
                 <i className="fas fa-envelope" />
@@ -42,10 +43,13 @@ class App extends Component {
             <label className="label">Ticket type</label>
             <div className="control">
               <div className="select">
-                <select>
+                <select
+                  value={ticketType}
+                  onChange={e => this.setState({ ticketType: e.target.value })}
+                >
                   <option>Select dropdown</option>
-                  <option>Regular 100 THB</option>
-                  <option>Premium 300 THB</option>
+                  <option value="regular">Regular 100 THB</option>
+                  <option value="premium">Premium 300 THB</option>
                 </select>
               </div>
             </div>
@@ -54,7 +58,13 @@ class App extends Component {
           <div className="field">
             <div className="control">
               <label className="checkbox">
-                <input type="checkbox" />
+                <input
+                  type="checkbox"
+                  checked={agreeTerms}
+                  onChange={e =>
+                    this.setState({ agreeTerms: e.target.checked })
+                  }
+                />{' '}
                 I agree to the <a href="#">terms and conditions</a>
               </label>
             </div>
@@ -64,11 +74,21 @@ class App extends Component {
             <label className="label">Add food?</label>
             <div className="control">
               <label className="radio">
-                <input type="radio" name="question" />
+                <input
+                  type="radio"
+                  name="question"
+                  checked={addFood}
+                  onClick={() => this.setState({ addFood: true })}
+                />{' '}
                 Yes (+ 50 THB)
               </label>
               <label className="radio">
-                <input type="radio" name="question" />
+                <input
+                  type="radio"
+                  name="question"
+                  checked={!addFood}
+                  onClick={() => this.setState({ addFood: false })}
+                />{' '}
                 No
               </label>
             </div>
