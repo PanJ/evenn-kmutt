@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import moment from 'moment'
 import logo from './logo.svg'
+import Input from './Input'
 import './App.css'
 
 const targetDate = moment('2018-05-06 17:00:00')
@@ -40,6 +41,7 @@ class App extends Component {
           <h1 className="title">Evenn Registration Form</h1>
           <p>Ticket sale ends in</p>
           <p>{countdown}</p>
+          <Input />
           <div className="field">
             <label className="label">Email</label>
             <div className="control has-icons-left has-icons-right">
