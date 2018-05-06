@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
+import moment from 'moment'
 import logo from './logo.svg'
 import './App.css'
+
+const targetDate = moment('2018-05-06 17:00:00')
 
 class App extends Component {
   constructor(props) {
@@ -9,16 +12,34 @@ class App extends Component {
       email: '',
       ticketType: '',
       agreeTerms: false,
-      addFood: false
+      addFood: false,
+      countdown: ''
     }
   }
+  componentDidMount() {
+    this.interval = setInterval(this.updateCountdown, 1000)
+    this.updateCountdown()
+  }
+  componentWillUnmount() {
+    clearInterval(this.interval)
+  }
+  updateCountdown = () => {
+    const duration = moment.duration(targetDate.diff(moment()))
+    const hour = Math.floor(duration.asHours())
+    const minute = duration.minutes()
+    const second = duration.seconds()
+    this.setState({
+      countdown: `${hour} hours ${minute} minutes ${second} seconds`
+    })
+  }
   render() {
-    const { email, ticketType, agreeTerms, addFood } = this.state
+    const { email, ticketType, agreeTerms, addFood, countdown } = this.state
     return (
       <div className="section">
         <div className="container">
           <h1 className="title">Evenn Registration Form</h1>
-
+          <p>Ticket sale ends in</p>
+          <p>{countdown}</p>
           <div className="field">
             <label className="label">Email</label>
             <div className="control has-icons-left has-icons-right">
